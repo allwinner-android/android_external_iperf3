@@ -3832,7 +3832,11 @@ iperf_new_stream(struct iperf_test *test, int s, int sender)
         snprintf(template, sizeof(template) / sizeof(char), "%s", test->tmp_template);
     } else {
         //find the system temporary dir *unix, windows, cygwin support
+#ifdef __ANDROID__
+        char *tempdir = "/data/local/tmp";
+#else
         char* tempdir = getenv("TMPDIR");
+#endif
         if (tempdir == 0){
             tempdir = getenv("TEMP");
         }
